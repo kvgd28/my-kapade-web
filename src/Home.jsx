@@ -17,10 +17,7 @@ function Home() {
                   </h1>
                   <h2 className="my-3">We are the team of logistics</h2>
                   <div className="mt-3">
-                    <NavLink
-                      to="/book"
-                      className="btn btn-outline-primary btn-lg"
-                    >
+                    <NavLink to="/book" className="btn-get-started">
                       Book Now
                     </NavLink>
                   </div>
@@ -29,7 +26,7 @@ function Home() {
                 <div className="col-lg-6 order-1 order-lg-2 header-img">
                   <img
                     src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                    className="img-fluid animated"
+                    className="img-fluid"
                     alt="Catalog type"
                   />
                 </div>
