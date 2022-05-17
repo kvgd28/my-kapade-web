@@ -28,7 +28,7 @@ function Home() {
 
                 <div className="col-lg-6 order-1 order-lg-2 header-img">
                   <img
-                    src={image}
+                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
                     className="img-fluid animated"
                     alt="Catalog type"
                   />
