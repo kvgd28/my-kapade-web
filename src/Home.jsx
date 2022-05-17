@@ -30,7 +30,7 @@ function Home() {
                   <img
                     src={image}
                     className="img-fluid animated"
-                    alt="Catalog type image"
+                    alt="Catalog type"
                   />
                 </div>
               </div>
