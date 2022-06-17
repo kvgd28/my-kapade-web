@@ -7,17 +7,17 @@ function Slideshow() {
     {
       caption: "First Picture",
       url:
-        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=200"
     },
     {
       caption: "Second Picture",
       url:
-        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=200"
     },
     {
       caption: "Third Picture",
       url:
-        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+        "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=200"
     }
   ];
 
@@ -29,7 +29,7 @@ function Slideshow() {
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
-    fetch("https://api.example.com/items")
+    fetch("https://booking-service-kdewilj24a-uc.a.run.app/getallitemgroups")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -49,9 +49,9 @@ function Slideshow() {
   return (
     <div className="slide-container">
       <Slide duration="2000" transitionDuration="1000">
-        {slideImages.map((slideImage, index) => (
+        {items.map((item, index) => (
           <div className="each-slide" key={index}>
-            <div style={{ backgroundImage: `url(${slideImage.url})` }}></div>
+            <div style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
           </div>
         ))}
       </Slide>
