@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import image from "./images/img-1.jpeg";
+import Slideshow from "./SlideShow";
 
 function Home() {
   return (
@@ -8,7 +8,7 @@ function Home() {
       <section id="header" className="">
         <div className="container-fluid nav_bg">
           <div className="row">
-            <div className="col-10 mx-auto">
+            <div className="col-11 mx-auto">
               <div className="row">
                 <div className="col-sm-6 pt-5 pt-lg-0 order-2 order-lg-1">
                   <h1>
@@ -24,11 +24,7 @@ function Home() {
                 </div>
 
                 <div className="col-lg-6 order-1 order-lg-2 header-img">
-                  <img
-                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                    className="img-fluid"
-                    alt="Catalog type"
-                  />
+                  <Slideshow />
                 </div>
               </div>
             </div>
