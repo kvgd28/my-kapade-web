@@ -164,7 +164,7 @@ function AddNewAddress(props) {
         mobileNumber={props.mobileNumber}
         userValidated={true}
         addressSelected={addressAdded}
-        address={addedAddress}
+        address={JSON.stringify(addedAddress)}
       />
     );
   }
@@ -204,7 +204,7 @@ function SelectAddress(props) {
                       name="flexRadioDefault"
                       id={index}
                       required
-                      onChange={(e) => setSelectedAddress(e.target.value)}
+                      onChange={(e) => setSelectedAddress(address)}
                     />
                     <label class="form-check-label" for={index}>
                       <address>{formatAddress(address)}</address>
@@ -281,7 +281,7 @@ function SelectAddress(props) {
         mobileNumber={props.mobileNumber}
         userValidated={true}
         addressSelected={addressSelected}
-        address={selectedAddress}
+        address={JSON.stringify(selectedAddress)}
       />
     );
   }
