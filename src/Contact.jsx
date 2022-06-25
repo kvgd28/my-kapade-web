@@ -1,9 +1,10 @@
 import React from "react";
+import SelectAddress from "./SelectAddress";
 
 function Contact() {
   return (
     <>
-      <h1>Contact</h1>
+      <SelectAddress mobileNumber="8639955673" />
     </>
   );
 }
