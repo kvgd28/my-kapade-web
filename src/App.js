@@ -9,6 +9,7 @@ import Home from "./Home";
 import BookNow from "./BookNow";
 import About from "./About";
 import Contact from "./Contact";
+import SelectAddress from "./SelectAddress";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/book" exact element={<BookNow />} />
           <Route path="/about" exact element={<About />} />
           <Route path="/contact" exact element={<Contact />} />
+          <Route path="/selectAddress" exact element={<SelectAddress />} />
         </Routes>
       </Router>
     </>

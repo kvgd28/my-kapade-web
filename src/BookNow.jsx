@@ -1,5 +1,6 @@
 import React from "react";
 import SelectAddress from "./SelectAddress";
+import SelectSlot from "./SelectSlot";
 import ValidateMobileNumber from "./ValidateMobileNumber";
 
 function BookNow(props) {
@@ -17,7 +18,7 @@ function BookNow(props) {
   }
 
   if (userValidated && addressSelected) {
-    return <div>Show Slots page</div>;
+    return <SelectSlot mobileNumber={mobileNumber} address={address} />;
   }
 }
 
