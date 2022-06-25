@@ -28,6 +28,131 @@ function formatAddress(addressObj) {
   );
 }
 
+async function addAddressInBackend(mobileNumber, address) {
+  return fetch(
+    `https://booking-service-kdewilj24a-uc.a.run.app/addaddress?mobileNumber=${mobileNumber}&name=${address.name}&primaryAddressLine=${address.primaryAddressLine}&secondaryAddressLine=${address.secondaryAddressLine}&landmark=${address.landmark}&state=${address.state}&city=${address.city}&pincode=${address.pincode}`
+  ).then((response) => {
+    if (!response.ok)
+      throw new Error(`Error while adding address: ${response.status}`);
+  });
+}
+
+function AddNewAddress(props) {
+  const [name, setName] = useState("");
+  const [primaryAddressLine, setPrimaryAddressLine] = useState("");
+  const [secondaryAddressLine, setSecondaryAddressLine] = useState("");
+  const [landmark, setLandmark] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+
+  const hanleAddAddressSubmit = async (e) => {
+    e.preventDefault();
+    var address = {
+      name: name,
+      primaryAddressLine: primaryAddressLine,
+      secondaryAddressLine: secondaryAddressLine,
+      landmark: landmark,
+      city: city,
+      state: state,
+      pincode: pincode
+    };
+    await addAddressInBackend(props.mobileNumber, address);
+    // TODO: Redirect to Slot selection
+  };
+
+  return (
+    <>
+      <form onSubmit={hanleAddAddressSubmit}>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="nameInput"
+            placeholder="Enter your name"
+            maxlength="30"
+            pattern="[A-Z a-z]*"
+            title="Please use only these characters: A-Z a-z"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            class="form-control"
+            id="primaryAddressLineInput"
+            placeholder="Primary Address Line"
+            maxlength="50"
+            pattern="[# , A-Z a-z 0-9]*"
+            title="Please use only these characters: #,A-Za-z0-9"
+            required
+            onChange={(e) => setPrimaryAddressLine(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            class="form-control"
+            id="secondaryAddressLineInput"
+            placeholder="Secondary Address Line (Optional)"
+            maxlength="50"
+            pattern="[# , A-Z a-z 0-9]*"
+            title="Please use only these characters: #,A-Za-z0-9"
+            onChange={(e) => setSecondaryAddressLine(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            class="form-control"
+            id="landmarkInput"
+            placeholder="Landmark"
+            maxlength="50"
+            pattern="[# , A-Z a-z 0-9]*"
+            title="Please use only these characters: #,A-Za-z0-9"
+            required
+            onChange={(e) => setLandmark(e.target.value)}
+          />
+          <br />
+          <select
+            class="form-select"
+            aria-label="select city"
+            required
+            onChange={(e) => setCity(e.target.value)}
+          >
+            <option selected>Select City</option>
+            <option value="Bangalore">Bangalore</option>
+          </select>
+          <br />
+          <select
+            class="form-select"
+            aria-label="select state"
+            onChange={(e) => setState(e.target.value)}
+            required
+          >
+            <option selected>Select State</option>
+            <option value="Karnataka">Karnataka</option>
+          </select>
+          <br />
+          <input
+            type="text"
+            class="form-control"
+            id="pincodeInput"
+            placeholder="Pincode"
+            maxlength="6"
+            pattern="[0-9]{6}"
+            title="Please enter a valid 6 digit pincode."
+            required
+            onChange={(e) => setPincode(e.target.value)}
+          />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">
+          Save and use address
+        </button>
+      </form>
+    </>
+  );
+}
+
 function SelectAddress(props) {
   const [addresses, setAddresses] = useState([
     {
@@ -111,7 +236,9 @@ function SelectAddress(props) {
               <tbody>
                 <tr>
                   <td className="col-7">{listAddresses()}</td>
-                  <td>Add a form here</td>
+                  <td>
+                    <AddNewAddress mobileNumber="9167520320" />
+                  </td>
                 </tr>
               </tbody>
             </table>
