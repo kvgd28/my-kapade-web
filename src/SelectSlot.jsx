@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import SelectAddress from "./SelectAddress";
 import DatePicker from "react-date-picker";
@@ -12,11 +12,33 @@ function SelectSlot(props) {
   const [maxDate, setMaxDate] = useState(currentDate);
   const [startTime, setStartTime] = useState();
   const [isTimeSelected, setIsTimeSelected] = useState(false);
+  const [invalidSlots, setInvalidSlots] = useState([]);
+
+  const slotDurationInMinutes = 60;
 
   function handleTimeSelect(fromTime) {
     setStartTime(fromTime);
     setIsTimeSelected(true);
   }
+
+  // Note: the empty deps array [] means
+  // this useEffect will run once
+  // similar to componentDidMount()
+  useEffect(() => {
+    fetch(
+      `https://booking-service-kdewilj24a-uc.a.run.app/fetchfreeslots?latitude=0.0&longitude=0.0&durationInMinutes=${slotDurationInMinutes}&items[0].displayName=ALL`
+    )
+      .then((res) => res.json())
+      .then(
+        (slots) => {
+          setAddresses(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {}
+      );
+  }, []);
 
   return (
     <>
@@ -38,7 +60,7 @@ function SelectSlot(props) {
       {date && (
         <SlotPicker
           // Required, interval between two slots in minutes, 30 = 30 min
-          interval={60}
+          interval={slotDurationInMinutes}
           // Required, when user selects a time slot, you will get the 'from' selected value
           onSelectTime={(from) => handleTimeSelect(from)}
           // Optional, array of unavailable time slots
