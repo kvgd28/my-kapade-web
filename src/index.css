@@ -91,3 +91,9 @@ Main Page css
   background: #efefef;
   text-align: center;
 }
+
+.date-picker {
+  width: fit-content;
+  /* To adjust the height as well */
+  height: fit-content;
+}

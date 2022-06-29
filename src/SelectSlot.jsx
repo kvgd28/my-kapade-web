@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import SelectAddress from "./SelectAddress";
-import DatePicker from "react-date-picker";
+import DatePicker from "react-datepicker";
 import SlotPicker from "slotpicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Button } from "bootstrap";
 
 function SelectSlot(props) {
   const [date, setDate] = useState();
@@ -19,6 +21,15 @@ function SelectSlot(props) {
   function handleTimeSelect(fromTime) {
     setStartTime(fromTime);
     setIsTimeSelected(true);
+  }
+
+  async function bookSlot() {
+    return fetch(`https://booking-service-kdewilj24a-uc.a.run.app/`).then(
+      (response) => {
+        if (!response.ok)
+          throw new Error(`Error while adding address: ${response.status}`);
+      }
+    );
   }
 
   // Note: the empty deps array [] means
@@ -44,62 +55,77 @@ function SelectSlot(props) {
 
   return (
     <>
-      <p>
-        Select Slot here for {props.mobileNumber} and {props.address}
-      </p>
-      <br />
-      <DatePicker
-        onChange={setDate}
-        value={date}
-        minDate={minDate}
-        maxDate={maxDate}
-        monthPlaceholder="mm"
-        dayPlaceholder="dd"
-        yearPlaceholder="yyyy"
-        format="y-MM-dd"
-      />
-      <br />
-      {date && JSON.stringify(invalidSlots)}
-      {date && (
-        <SlotPicker
-          // Required, interval between two slots in minutes, 30 = 30 min
-          interval={slotDurationInMinutes}
-          // Required, when user selects a time slot, you will get the 'from' selected value
-          onSelectTime={(from) => handleTimeSelect(from)}
-          // Optional, array of unavailable time slots
-          unAvailableSlots={invalidSlots
-            .filter(
-              (slot) =>
-                new Date(slot.startTimeInEpoch).getDate() === date.getDate()
-            )
-            .map(
-              (slot) =>
-                "" +
-                new Date(slot.startTimeInEpoch).getHours() +
-                ":" +
-                new Date(slot.startTimeInEpoch)
-                  .getMinutes()
-                  .toLocaleString("en-US", {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false
-                  })
+      <div className="container-fluid nav_bg">
+        <div className="row">
+          <div className="col-6 mx-auto">
+            <div className="pt-5 justify-content-center">
+              <h2 className="pb-2">Select a slot for the visit </h2>
+              <DatePicker
+                inline
+                minDate={minDate}
+                maxDate={maxDate}
+                onChange={(date) => setDate(date)}
+              />
+            </div>
+            <br />
+            {date && (
+              <SlotPicker
+                // Required, interval between two slots in minutes, 30 = 30 min
+                interval={slotDurationInMinutes}
+                // Required, when user selects a time slot, you will get the 'from' selected value
+                onSelectTime={(from) => handleTimeSelect(from)}
+                // Optional, array of unavailable time slots
+                unAvailableSlots={invalidSlots
+                  .filter(
+                    (slot) =>
+                      new Date(slot.startTimeInEpoch).getDate() ===
+                      date.getDate()
+                  )
+                  .map(
+                    (slot) =>
+                      "" +
+                      new Date(slot.startTimeInEpoch).getHours() +
+                      ":" +
+                      new Date(slot.startTimeInEpoch)
+                        .getMinutes()
+                        .toLocaleString("en-US", {
+                          minimumIntegerDigits: 2,
+                          useGrouping: false
+                        })
+                  )}
+                // Optional, 8AM the start of the slots
+                from={"10:00"}
+                // Optional, 09:00PM the end of the slots
+                to={"20:00"}
+                // Optional, 01:00 PM, will be selected by default
+                //defaultSelectedTime={"13:00"}
+                // Optional, selected slot color
+                selectedSlotColor="#F09999"
+                // Optional, language of the displayed text, default is english (en)
+                lang="en"
+              />
             )}
-          // Optional, 8AM the start of the slots
-          from={"10:00"}
-          // Optional, 09:00PM the end of the slots
-          to={"20:00"}
-          // Optional, 01:00 PM, will be selected by default
-          //defaultSelectedTime={"13:00"}
-          // Optional, selected slot color
-          selectedSlotColor="#F09999"
-          // Optional, language of the displayed text, default is english (en)
-          lang="en"
-        />
-      )}
-      {isTimeSelected && <div>{startTime.$H}</div>}
-      <NavLink to="/selectAddress" className="btn-get-started">
-        Back
-      </NavLink>
+            <table className="table justify-content-center table-borderless">
+              <tbody>
+                <tr>
+                  <td>
+                    <NavLink to="/selectAddress" className="btn-get-started">
+                      Back
+                    </NavLink>
+                  </td>
+                  {isTimeSelected && (
+                    <td>
+                      <button onClick={bookSlot} className="btn-get-started">
+                        Book
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
