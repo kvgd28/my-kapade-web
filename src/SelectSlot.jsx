@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { NavLink } from "react-router-dom";
 import SelectAddress from "./SelectAddress";
 import DatePicker from "react-datepicker";
@@ -24,12 +24,24 @@ function SelectSlot(props) {
   }
 
   async function bookSlot() {
-    return fetch(`https://booking-service-kdewilj24a-uc.a.run.app/`).then(
-      (response) => {
-        if (!response.ok)
-          throw new Error(`Error while adding address: ${response.status}`);
-      }
-    );
+    const selectedAddress = JSON.parse(props.address);
+    // This logic needs to be changed if slot duration changes.
+    const slotStartTimeEpoch =
+      date.getTime() + new Date(startTime).getHours() * 60 * 60 * 1000;
+    const slotEndTimeEpoch =
+      slotStartTimeEpoch + slotDurationInMinutes * 60 * 1000;
+    var url = `https://booking-service-kdewilj24a-uc.a.run.app/bookslot?`;
+    url = url + `user.mobileNumber=${props.mobileNumber}&`;
+    url =
+      url +
+      `slotStartTimeEpoch=${slotStartTimeEpoch}&slotEndTimeEpoch=${slotEndTimeEpoch}&`;
+    url =
+      url +
+      `address.name=${selectedAddress.name}&address.primaryAddressLine=${selectedAddress.primaryAddressLine}&address.secondaryAddressLine=${selectedAddress.secondaryAddressLine}&address.landmark=${selectedAddress.landmark}&address.city=${selectedAddress.city}&address.state=${selectedAddress.state}&address.pincode=${selectedAddress.pincode}`;
+    return fetch(url).then((response) => {
+      if (!response.ok)
+        throw new Error(`Error while adding address: ${response.status}`);
+    });
   }
 
   // Note: the empty deps array [] means
