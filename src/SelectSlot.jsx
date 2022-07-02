@@ -15,6 +15,7 @@ function SelectSlot(props) {
   const [startTime, setStartTime] = useState();
   const [isTimeSelected, setIsTimeSelected] = useState(false);
   const [invalidSlots, setInvalidSlots] = useState([]);
+  const [myUrl, setMyUrl] = useState();
 
   const slotDurationInMinutes = 60;
 
@@ -30,15 +31,23 @@ function SelectSlot(props) {
       date.getTime() + new Date(startTime).getHours() * 60 * 60 * 1000;
     const slotEndTimeEpoch =
       slotStartTimeEpoch + slotDurationInMinutes * 60 * 1000;
-    var url = `https://booking-service-kdewilj24a-uc.a.run.app/bookslot?`;
-    url = url + `user.mobileNumber=${props.mobileNumber}&`;
-    url =
-      url +
-      `slotStartTimeEpoch=${slotStartTimeEpoch}&slotEndTimeEpoch=${slotEndTimeEpoch}&`;
-    url =
-      url +
-      `address.name=${selectedAddress.name}&address.primaryAddressLine=${selectedAddress.primaryAddressLine}&address.secondaryAddressLine=${selectedAddress.secondaryAddressLine}&address.landmark=${selectedAddress.landmark}&address.city=${selectedAddress.city}&address.state=${selectedAddress.state}&address.pincode=${selectedAddress.pincode}`;
-    return fetch(url).then((response) => {
+    var url = `https://booking-service-kdewilj24a-uc.a.run.app/bookslot`;
+    setMyUrl(url);
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          mobileNumber: props.mobileNumber
+        },
+        slotStartTimeEpoch: slotStartTimeEpoch,
+        slotEndTimeEpoch: slotEndTimeEpoch,
+        address: selectedAddress
+      })
+    }).then((response) => {
       if (!response.ok)
         throw new Error(`Error while adding address: ${response.status}`);
     });
@@ -67,6 +76,7 @@ function SelectSlot(props) {
 
   return (
     <>
+      {myUrl && <div>{myUrl}</div>}
       <div className="container-fluid nav_bg">
         <div className="row">
           <div className="col-6 mx-auto">
