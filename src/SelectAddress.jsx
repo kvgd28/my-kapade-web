@@ -31,9 +31,17 @@ function formatAddress(addressObj) {
 }
 
 async function addAddressInBackend(mobileNumber, address) {
-  return fetch(
-    `https://booking-service-kdewilj24a-uc.a.run.app/addaddress?mobileNumber=${mobileNumber}&name=${address.name}&primaryAddressLine=${address.primaryAddressLine}&secondaryAddressLine=${address.secondaryAddressLine}&landmark=${address.landmark}&state=${address.state}&city=${address.city}&pincode=${address.pincode}`
-  ).then((response) => {
+  return fetch(`https://booking-service-kdewilj24a-uc.a.run.app/addaddress`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      mobileNumber: mobileNumber,
+      address: address
+    })
+  }).then((response) => {
     if (!response.ok)
       throw new Error(`Error while adding address: ${response.status}`);
   });

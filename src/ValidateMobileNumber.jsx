@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import BookNow from "./BookNow";
 
 async function sendOtp(mobileNumber) {
-  return fetch(
-    `https://booking-service-kdewilj24a-uc.a.run.app/sendotp?mobileNumber=${mobileNumber}`
-  ).then((response) => {
+  return fetch(`https://booking-service-kdewilj24a-uc.a.run.app/sendotp`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: mobileNumber
+  }).then((response) => {
     if (!response.ok)
       throw new Error(`Error while sending otp: ${response.status}`);
   });
@@ -55,7 +60,7 @@ function ValidateMobileNumber() {
       <>
         <div className="container-fluid nav_bg">
           <div className="row">
-            <div className="col-11 mx-auto">
+            <div className="col-6 mx-auto pt-5">
               <form onSubmit={handleMobileNumberSubmit}>
                 <div class="form-group">
                   <label for="mobileNumberInput">Mobile Number</label>
@@ -75,7 +80,8 @@ function ValidateMobileNumber() {
                 </div>
                 {!otpSent && (
                   <div>
-                    <button type="submit" class="btn btn-primary">
+                    <br />
+                    <button type="submit" class="btn btn-primary pr-5">
                       Submit
                     </button>
                     {loading && <div class="spinner-border" role="status" />}
@@ -85,6 +91,7 @@ function ValidateMobileNumber() {
               <form onSubmit={handleOtpSubmit}>
                 {otpSent && (
                   <>
+                    <br />
                     <div class="form-group">
                       <label for="userOtp">OTP</label>
                       <input
@@ -97,9 +104,14 @@ function ValidateMobileNumber() {
                         onChange={(e) => setUserOtp(e.target.value)}
                       />
                     </div>
-                    {wrongOtp && <div>OTP entered is wrong. Please check.</div>}
+                    {wrongOtp && (
+                      <div style={{ color: "red" }}>
+                        OTP entered is wrong. Please check.
+                      </div>
+                    )}
                     <>
-                      <button type="submit" class="btn btn-primary">
+                      <br />
+                      <button type="submit" class="btn btn-primary pr-5">
                         Submit
                       </button>
                       {loading && <div class="spinner-border" role="status" />}
