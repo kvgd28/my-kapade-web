@@ -60,13 +60,15 @@ function ValidateMobileNumber() {
       <>
         <div className="container-fluid nav_bg">
           <div className="row">
-            <div className="col-6 mx-auto pt-5">
+            <div className="col-lg-3 col-sm-4 mx-auto pt-5">
               <form onSubmit={handleMobileNumberSubmit}>
                 <div class="form-group">
-                  <label for="mobileNumberInput">Mobile Number</label>
+                  <label className="form-label" for="mobileNumberInput">
+                    Mobile Number
+                  </label>
                   <input
                     type="tel"
-                    class="form-control"
+                    className="form-control"
                     id="mobileNumberInput"
                     aria-describedby="mobileNumberHelp"
                     placeholder="Enter 10 digit mobile number"
@@ -75,7 +77,7 @@ function ValidateMobileNumber() {
                     onChange={(e) => setMobileNumber(e.target.value)}
                   />
                   <small id="mobileNumberHelp" class="form-text text-muted">
-                    We'll never share your mobile number with anyone else.
+                    We'll never share your mobile number with anyone.
                   </small>
                 </div>
                 {!otpSent && (
@@ -93,7 +95,9 @@ function ValidateMobileNumber() {
                   <>
                     <br />
                     <div class="form-group">
-                      <label for="userOtp">OTP</label>
+                      <label className="form-label" for="userOtp">
+                        OTP
+                      </label>
                       <input
                         type="password"
                         class="form-control"

@@ -3,7 +3,12 @@
 }
 
 .navbar-brand {
-  font-size: 1.9rem !important;
+  font-size: 3rem !important;
+  color: #565387 !important;
+}
+
+.nav-link {
+  font-size: 1.4rem !important;
   color: #565387 !important;
 }
 
@@ -96,4 +101,8 @@ Main Page css
   width: fit-content;
   /* To adjust the height as well */
   height: fit-content;
+}
+
+.form-label {
+  font-size: 1.2rem !important;
 }
