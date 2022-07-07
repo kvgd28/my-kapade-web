@@ -151,7 +151,7 @@ function SelectSlot(props) {
           <div className="col-2 mx-auto d-flex justify-content-center">
             <NavLink
               style={{
-                "background-color": "lightgrey",
+                "background-color": "coral",
                 color: "white"
               }}
               to="/selectAddress"

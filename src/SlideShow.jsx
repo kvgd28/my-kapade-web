@@ -25,7 +25,6 @@ function Slideshow() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  /*
   // Note: the empty deps array [] means
   // this useEffect will run once
   // similar to componentDidMount()
@@ -46,7 +45,6 @@ function Slideshow() {
         }
       );
   }, []);
-  */
 
   return (
     <div className="slide-container">
