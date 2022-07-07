@@ -79,16 +79,31 @@ function SelectSlot(props) {
       {myUrl && <div>{myUrl}</div>}
       <div className="container-fluid nav_bg">
         <div className="row">
-          <div className="col-6 mx-auto">
-            <div className="pt-5 justify-content-center">
-              <h2 className="pb-2">Select a slot for the visit </h2>
-              <DatePicker
-                inline
-                minDate={minDate}
-                maxDate={maxDate}
-                onChange={(date) => setDate(date)}
-              />
-            </div>
+          <div className="col-3"></div>
+          <div className="col-6 pb-2 pt-3">
+            <h2 className="d-flex justify-content-center">
+              Select a slot for shopping
+            </h2>
+          </div>
+          <div className="col-3"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="col-6 pt-3 mx-auto d-flex justify-content-center">
+            <DatePicker
+              inline
+              minDate={minDate}
+              maxDate={maxDate}
+              onChange={(date) => setDate(date)}
+            />
+          </div>
+          <div className="col-3"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="col-sm-10 col-lg-6 mx-auto">
             <br />
             {date && (
               <SlotPicker
@@ -127,25 +142,37 @@ function SelectSlot(props) {
                 lang="en"
               />
             )}
-            <table className="table justify-content-center table-borderless">
-              <tbody>
-                <tr>
-                  <td>
-                    <NavLink to="/selectAddress" className="btn-get-started">
-                      Back
-                    </NavLink>
-                  </td>
-                  {isTimeSelected && (
-                    <td>
-                      <button onClick={bookSlot} className="btn-get-started">
-                        Book
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              </tbody>
-            </table>
           </div>
+          <div className="col-3"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="col-2 mx-auto d-flex justify-content-center">
+            <NavLink
+              style={{
+                "background-color": "lightgrey",
+                color: "white"
+              }}
+              to="/selectAddress"
+              className="btn-get-started"
+            >
+              Back
+            </NavLink>
+          </div>
+          <div className="col-2"></div>
+          <div className="col-2 mx-auto d-flex justify-content-center">
+            {isTimeSelected && (
+              <button
+                style={{ "background-color": "lightseagreen", color: "white" }}
+                onClick={bookSlot}
+                className="btn-get-started"
+              >
+                Book
+              </button>
+            )}
+          </div>
+          <div className="col-3"></div>
         </div>
       </div>
     </>

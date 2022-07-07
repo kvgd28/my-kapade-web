@@ -12,6 +12,10 @@
   color: #565387 !important;
 }
 
+.nav-link:hover {
+  transform: scale(1.1);
+}
+
 .navbar a {
   font-size: 1.3rem;
   text-transform: capitalize;
@@ -71,6 +75,10 @@ Main Page css
   color: #3498db;
   border: 2px solid #3498db;
   text-decoration: none;
+}
+
+.btn-get-started:hover {
+  transform: scale(1.2);
 }
 
 #header .btn-get-started:hover {

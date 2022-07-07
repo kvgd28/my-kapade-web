@@ -18,7 +18,7 @@ function Home() {
                   <h2 className="my-3">We are the team of logistics</h2>
                   <div className="mt-3">
                     <NavLink to="/book" className="btn-get-started">
-                      Book Now
+                      Book slot for FREE
                     </NavLink>
                   </div>
                 </div>
