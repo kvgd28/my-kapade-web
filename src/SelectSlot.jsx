@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import SlotPicker from "slotpicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "bootstrap";
+import BookingStatus from "./BookingStatus";
 
 function SelectSlot(props) {
   const [date, setDate] = useState();
@@ -16,6 +17,8 @@ function SelectSlot(props) {
   const [isTimeSelected, setIsTimeSelected] = useState(false);
   const [invalidSlots, setInvalidSlots] = useState([]);
   const [myUrl, setMyUrl] = useState();
+  const [isBookingSuccessful, setIsBookingSuccessful] = useState(false);
+  const [isBookingError, setIsBookingError] = useState(false);
 
   const slotDurationInMinutes = 60;
 
@@ -48,8 +51,11 @@ function SelectSlot(props) {
         address: selectedAddress
       })
     }).then((response) => {
-      if (!response.ok)
-        throw new Error(`Error while adding address: ${response.status}`);
+      if (!response.ok) {
+        setIsBookingError(true);
+      } else {
+        setIsBookingSuccessful(true);
+      }
     });
   }
 
@@ -74,6 +80,11 @@ function SelectSlot(props) {
       );
   }, [minDate, maxDate]);
 
+  if (isBookingSuccessful) {
+    return <BookingStatus isSuccess="true" />;
+  } else if (isBookingError) {
+    return <BookingStatus isSuccess="false" />;
+  }
   return (
     <>
       {myUrl && <div>{myUrl}</div>}

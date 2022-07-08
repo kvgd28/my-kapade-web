@@ -1,4 +1,5 @@
 import React from "react";
+import BookingStatus from "./BookingStatus";
 import SelectSlot from "./SelectSlot";
 
 function About() {
@@ -13,7 +14,7 @@ function About() {
   };
   return (
     <>
-      <SelectSlot mobileNumber="8639955673" address={JSON.stringify(address)} />
+      <BookingStatus isSuccess="true" />
     </>
   );
 }

@@ -60,7 +60,7 @@ function ValidateMobileNumber() {
       <>
         <div className="container-fluid nav_bg">
           <div className="row">
-            <div className="col-lg-3 col-sm-4 mx-auto pt-5">
+            <div className="col-sm-4 col-md-4 col-lg-3  mx-auto pt-5">
               <form onSubmit={handleMobileNumberSubmit}>
                 <div class="form-group">
                   <label className="form-label" for="mobileNumberInput">
