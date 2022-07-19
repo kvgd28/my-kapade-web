@@ -87,7 +87,6 @@ function SelectSlot(props) {
   }
   return (
     <>
-      {myUrl && <div>{myUrl}</div>}
       <div className="container-fluid nav_bg">
         <div className="row">
           <div className="col-3"></div>
@@ -165,7 +164,10 @@ function SelectSlot(props) {
                 "background-color": "coral",
                 color: "white"
               }}
-              to="/selectAddress"
+              to={{
+                pathname: "/selectAddress",
+                aboutProps: { mobileNumber: props.mobileNumber }
+              }}
               className="btn-get-started"
             >
               Back

@@ -22,7 +22,7 @@ function BookingStatus(props) {
                     style={{ "font-size": "5rem", color: "lightseagreen" }}
                   ></i>
                   <div className="pt-5  mx-auto d-flex justify-content-center ">
-                    <NavLink to="/home" className="btn-get-started">
+                    <NavLink to="/" className="btn-get-started">
                       Go Home
                     </NavLink>
                   </div>

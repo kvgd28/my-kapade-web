@@ -30,24 +30,24 @@ function formatAddress(addressObj) {
   );
 }
 
-async function addAddressInBackend(mobileNumber, address) {
+async function addAddressInBackend(address) {
   return fetch(`https://booking-service-kdewilj24a-uc.a.run.app/addaddress`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      mobileNumber: mobileNumber,
-      address: address
-    })
+    body: JSON.stringify(address)
   }).then((response) => {
     if (!response.ok)
       throw new Error(`Error while adding address: ${response.status}`);
   });
 }
 
-function AddNewAddress(props) {
+function SelectAddress(props) {
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState({});
+  const [addressSelected, setAddressSelected] = useState(false);
   const [name, setName] = useState("");
   const [primaryAddressLine, setPrimaryAddressLine] = useState("");
   const [secondaryAddressLine, setSecondaryAddressLine] = useState("");
@@ -55,8 +55,6 @@ function AddNewAddress(props) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
-  const [addressAdded, setAddressAdded] = useState(false);
-  const [addedAddress, setAddedAddress] = useState({});
 
   const hanleAddAddressSubmit = async (e) => {
     e.preventDefault();
@@ -67,15 +65,16 @@ function AddNewAddress(props) {
       landmark: landmark,
       city: city,
       state: state,
-      pincode: pincode
+      pincode: pincode,
+      mobileNumber: props.mobileNumber
     };
-    await addAddressInBackend(props.mobileNumber, address);
+    await addAddressInBackend(address);
     // Redirect to Slot selection
-    setAddressAdded(true);
-    setAddedAddress(address);
+    setAddressSelected(true);
+    setSelectedAddress(address);
   };
 
-  if (!addressAdded) {
+  function addNewAddress() {
     return (
       <>
         <form onSubmit={hanleAddAddressSubmit}>
@@ -166,22 +165,7 @@ function AddNewAddress(props) {
         </form>
       </>
     );
-  } else {
-    return (
-      <BookNow
-        mobileNumber={props.mobileNumber}
-        userValidated={true}
-        addressSelected={addressAdded}
-        address={JSON.stringify(addedAddress)}
-      />
-    );
   }
-}
-
-function SelectAddress(props) {
-  const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState({});
-  const [addressSelected, setAddressSelected] = useState(false);
 
   function hanleSelectAddressSubmit() {
     setAddressSelected(true);
@@ -193,23 +177,24 @@ function SelectAddress(props) {
         <form onSubmit={hanleSelectAddressSubmit}>
           <table className="table table-hover">
             <tbody>
-              {addresses.map((address, index) => (
-                <tr>
-                  <div class="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id={index}
-                      required
-                      onChange={(e) => setSelectedAddress(address)}
-                    />
-                    <label class="form-check-label" for={index}>
-                      <address>{formatAddress(address)}</address>
-                    </label>
-                  </div>
-                </tr>
-              ))}
+              {addresses.length > 0 &&
+                addresses.map((address, index) => (
+                  <tr>
+                    <div class="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id={index}
+                        required
+                        onChange={(e) => setSelectedAddress(address)}
+                      />
+                      <label class="form-check-label" for={index}>
+                        <address>{formatAddress(address)}</address>
+                      </label>
+                    </div>
+                  </tr>
+                ))}
             </tbody>
           </table>
           {addresses.length > 0 && (
@@ -257,9 +242,7 @@ function SelectAddress(props) {
             <div className="col-5 mx-auto  d-flex justify-content-center order-1">
               {listAddresses()}
             </div>
-            <div className="col-4 mx-auto order-2">
-              <AddNewAddress mobileNumber={props.mobileNumber} />
-            </div>
+            <div className="col-4 mx-auto order-2">{addNewAddress()}</div>
           </div>
         </div>
       </>
